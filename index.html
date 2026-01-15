@@ -3,12 +3,11 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Pausa Activa | Integramed</title>
-  <!-- Fuente limpia -->
+  <title>Código 3-2-1 | Integramed</title>
   <style>
     :root {
       /* COLORES CORPORATIVOS INTEGRAMED */
-      --brand-green: #8CC63F; /* Verde tipo Integramed */
+      --brand-green: #8CC63F; /* Verde Integramed */
       --brand-dark: #333333;
       --brand-gray: #f4f7f6;
       --text-color: #444444;
@@ -147,7 +146,7 @@
     </div>
     
     <div class="card" id="app"></div>
-    <div class="small">© Integramed - Salud y Bienestar</div>
+    <div class="small">Modo anónimo. Sin registro. Ronda máx. 3 minutos.</div>
   </div>
 
 <script>
@@ -155,172 +154,3 @@
   let step = 0;
   let digits = [];
   let unlock = "";
-
-  const randDigit = () => Math.floor(Math.random()*9)+1;
-
-  function render() {
-    // PANTALLA 0: INICIO
-    if (step === 0) {
-      app.innerHTML = `
-        <div class="brand-header">CÓDIGO 3-2-1</div>
-        <h1>Pausa Activa</h1>
-        <p>3 retos · 3 minutos · 1 premio</p>
-        <div class="row">
-          <button onclick="next()">Iniciar</button>
-        </div>
-        <div class="pill">Hidrata · Relaja · Muévete</div>
-      `;
-    }
-
-    // PANTALLA 1: HIDRATACIÓN
-    if (step === 1) {
-      app.innerHTML = `
-        <h1>Reto 1: Hidratación</h1>
-        <p>Elige un micro-hábito para mañana:</p>
-        <div class="row">
-          <button onclick="pickHydration('A')">💧 A) Oficina: 3 sorbos por hitos</button>
-          <button onclick="pickHydration('B')">🌱 B) Campo: 3 sorbos por pausas</button>
-          <button onclick="pickHydration('C')">🚗 C) Conducción: Sorbos por paradas</button>
-        </div>
-      `;
-    }
-
-    // PANTALLA 2: DIGITO 1
-    if (step === 2) {
-      app.innerHTML = `
-        <h1>DÍGITO 1</h1>
-        <div class="digit">${digits[0]}</div>
-        <p>Listo. Ahora 5 respiraciones: <br><b>4 inhala / 6 exhala</b> (≈45s).</p>
-        <div class="row">
-          <button onclick="next()">Continuar</button>
-        </div>
-      `;
-    }
-
-    // PANTALLA 3: RELAJACIÓN
-    if (step === 3) {
-      app.innerHTML = `
-        <h1>Reto 2: Relajación</h1>
-        <p>Completa 5 respiraciones profundas ahora.</p>
-        <div class="row">
-          <button onclick="doneBreath()">Listo ✅</button>
-        </div>
-        <div class="pill">Hombros abajo · exhala largo</div>
-      `;
-    }
-
-    // PANTALLA 4: DIGITO 2
-    if (step === 4) {
-      app.innerHTML = `
-        <h1>DÍGITO 2</h1>
-        <div class="digit">${digits[1]}</div>
-        <p>Último reto: 60s de movimiento suave.</p>
-        <div class="row">
-          <button onclick="next()">Continuar</button>
-        </div>
-      `;
-    }
-
-    // PANTALLA 5: MOVIMIENTO
-    if (step === 5) {
-      app.innerHTML = `
-        <h1>Reto 3: Movimiento</h1>
-        <p>60s: 30s movilidad de hombros + 30s marcha suave.</p>
-        <div class="row">
-          <button onclick="doneMove()">Listo ✅</button>
-        </div>
-        <div class="pill">Sin dolor · suave · controlado</div>
-      `;
-    }
-
-    // PANTALLA 6: DESBLOQUEO
-    if (step === 6) {
-      app.innerHTML = `
-        <h1>DÍGITO 3</h1>
-        <div class="digit">${digits[2]}</div>
-        <p>Ingresa tu código para desbloquear:</p>
-        <div class="row">
-          <input id="code" type="tel" maxlength="3" placeholder="---" />
-          <button onclick="tryUnlock()">Desbloquear</button>
-        </div>
-        <div id="msg" class="small"></div>
-      `;
-    }
-
-    // PANTALLA 7: ÉXITO (DINÁMICA ORIGINAL RESTAURADA)
-    if (step === 7) {
-      app.innerHTML = `
-        <h1 style="color:var(--brand-green)">¡DESBLOQUEADO! 🎉</h1>
-        <p>Toca para jugar (premio instantáneo o sorteo).</p>
-        <div class="row">
-          <button onclick="play()">Jugar</button>
-          <button onclick="reset()" style="background:#ccc; color:#333">Nueva ronda</button>
-        </div>
-      `;
-    }
-
-    // PANTALLA 8: RESULTADO DEL PREMIO (DINÁMICA ORIGINAL)
-    if (step === 8) {
-      app.innerHTML = `
-        <h1>Resultado</h1>
-        <p style="font-size:24px; font-weight:bold; color:var(--brand-dark)">${prizeText}</p>
-        <div class="row">
-          <button onclick="reset()">Siguiente</button>
-        </div>
-        <div class="pill">Tip: agua + respiración + movimiento</div>
-      `;
-    }
-  }
-
-  function next(){ step++; render(); }
-
-  function pickHydration(letter){
-    digits[0] = randDigit();
-    step = 2; render();
-  }
-
-  function doneBreath(){
-    digits[1] = randDigit();
-    step = 4; render();
-  }
-
-  function doneMove(){
-    digits[2] = randDigit();
-    unlock = digits.join('');
-    step = 6; render();
-  }
-
-  function tryUnlock(){
-    const v = (document.getElementById('code').value || "").trim();
-    const msg = document.getElementById('msg');
-    if (v === unlock){
-      msg.innerHTML = `<span class="ok">Correcto ✅</span>`;
-      setTimeout(()=>{ step = 7; render(); }, 350);
-    } else {
-      msg.innerHTML = `<span class="bad">Casi. Prueba de nuevo.</span>`;
-    }
-  }
-
-  let prizeText = "";
-  
-  // FUNCIÓN PLAY ORIGINAL RESTAURADA
-  function play(){
-    const outcomes = [
-      "Premio pequeño ✅",
-      "Premio mediano ✅",
-      "Participas en el sorteo final 🎟️",
-      "¡Otra oportunidad! 🔁"
-    ];
-    prizeText = outcomes[Math.floor(Math.random()*outcomes.length)];
-    step = 8; render();
-  }
-
-  function reset(){
-    step = 0; digits = []; unlock = ""; prizeText = "";
-    render();
-  }
-
-  render();
-</script>
-</body>
-</html>
