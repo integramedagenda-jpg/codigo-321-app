@@ -3,28 +3,156 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Código 3-2-1</title>
+  <title>Pausa Activa | Integramed</title>
+  <!-- Fuente limpia (Open Sans o similar del sistema) -->
   <style>
-    body{margin:0;font-family:system-ui,Segoe UI,Roboto,Arial;background:#0b0f1a;color:#fff;}
-    .wrap{max-width:900px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:28px;}
-    .card{background:#121a2b;border:1px solid #24314f;border-radius:18px;padding:22px;box-shadow:0 10px 30px rgba(0,0,0,.25);}
-    h1{margin:0 0 10px;font-size:34px;letter-spacing:.2px;}
-    p{margin:8px 0 0;opacity:.9;font-size:18px;line-height:1.35;}
-    .row{display:flex;gap:12px;flex-wrap:wrap;margin-top:16px;}
-    button{cursor:pointer;border:0;border-radius:14px;padding:14px 16px;font-size:18px;font-weight:650;background:#2a3a63;color:#fff;flex:1;min-width:220px;}
-    button:hover{filter:brightness(1.08);}
-    .small{font-size:14px;opacity:.85;margin-top:10px;}
-    .digit{font-size:72px;font-weight:800;letter-spacing:6px;margin:12px 0;}
-    input{font-size:22px;padding:12px 14px;border-radius:12px;border:1px solid #3a4a74;background:#0b0f1a;color:#fff;width:220px;letter-spacing:10px;text-align:center;}
-    .pill{display:inline-block;padding:8px 12px;border-radius:999px;background:#1b2540;border:1px solid #2d3f6d;margin-top:10px;font-weight:650;}
-    .ok{color:#b8ffb8;}
-    .bad{color:#ffb8b8;}
+    :root {
+      /* COLORES CORPORATIVOS INTEGRAMED */
+      --brand-green: #8CC63F; /* Verde tipo Integramed */
+      --brand-dark: #333333;
+      --brand-gray: #f4f7f6;
+      --text-color: #444444;
+      --white: #ffffff;
+    }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: var(--brand-gray);
+      color: var(--text-color);
+    }
+
+    .wrap {
+      max-width: 600px; /* Más estrecho para parecer App médica */
+      margin: 0 auto;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    /* Tarjeta estilo clínico: Blanca, limpia, sombra suave */
+    .card {
+      background: var(--white);
+      border: 1px solid #e0e0e0;
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+      text-align: center;
+    }
+
+    /* Header de marca */
+    .brand-header {
+      font-weight: 800;
+      color: var(--brand-green);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 20px;
+      font-size: 14px;
+    }
+
+    h1 {
+      margin: 0 0 15px;
+      font-size: 28px;
+      color: var(--brand-dark);
+      font-weight: 700;
+    }
+
+    p {
+      margin: 10px 0 20px;
+      font-size: 16px;
+      line-height: 1.5;
+      color: #666;
+    }
+
+    .row {
+      display: flex;
+      gap: 10px;
+      flex-direction: column; /* Botones uno debajo de otro para mejor lectura móvil */
+      margin-top: 20px;
+    }
+
+    /* Botones estilo Integramed */
+    button {
+      cursor: pointer;
+      border: 0;
+      border-radius: 50px; /* Bordes redondeados amigables */
+      padding: 15px 20px;
+      font-size: 16px;
+      font-weight: 600;
+      background: var(--brand-green);
+      color: var(--white);
+      transition: transform 0.2s, background 0.2s;
+      width: 100%;
+      box-shadow: 0 4px 10px rgba(140, 198, 63, 0.3);
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.05);
+    }
+
+    /* Dígitos grandes */
+    .digit {
+      font-size: 80px;
+      font-weight: 800;
+      color: var(--brand-green);
+      margin: 10px 0;
+    }
+
+    .small {
+      font-size: 12px;
+      opacity: 0.6;
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    input {
+      font-size: 24px;
+      padding: 15px;
+      border-radius: 12px;
+      border: 2px solid #ddd;
+      background: #fafafa;
+      color: var(--brand-dark);
+      width: 100%;
+      box-sizing: border-box; /* Para que no se salga */
+      letter-spacing: 5px;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: var(--brand-green);
+    }
+
+    /* Pastillas de consejos (Pills) */
+    .pill {
+      display: inline-block;
+      padding: 6px 14px;
+      border-radius: 20px;
+      background: #eef7e6; /* Verde muy clarito */
+      color: #5c8a2a;
+      border: 1px solid #dcebc9;
+      margin-top: 15px;
+      font-weight: 600;
+      font-size: 13px;
+    }
+
+    .ok { color: var(--brand-green); font-weight: bold; }
+    .bad { color: #e74c3c; font-weight: bold; }
   </style>
 </head>
 <body>
   <div class="wrap">
+    <!-- Logotipo Texto (Simulado) -->
+    <div style="text-align: center; margin-bottom: 20px;">
+        <span style="font-weight: bold; font-size: 20px; color: #333;">INTEGRA</span><span style="font-weight: bold; font-size: 20px; color: #8CC63F;">MED</span>
+    </div>
+    
     <div class="card" id="app"></div>
-    <div class="small">Modo anónimo. Sin registro. Ronda máx. 3 minutos.</div>
+    <div class="small">© Integramed - Salud y Bienestar</div>
   </div>
 
 <script>
@@ -33,108 +161,118 @@
   let digits = [];
   let unlock = "";
 
-  const randDigit = () => Math.floor(Math.random()*9)+1; // 1..9
+  const randDigit = () => Math.floor(Math.random()*9)+1;
 
   function render() {
+    // PANTALLA 0: INICIO
     if (step === 0) {
       app.innerHTML = `
-        <h1>CÓDIGO 3-2-1</h1>
-        <p>3 retos · 3 minutos · 1 premio</p>
+        <div class="brand-header">PAUSA ACTIVA</div>
+        <h1>Código 3-2-1</h1>
+        <p>Tómate 3 minutos para recargar energía y cuidar tu salud.</p>
         <div class="row">
-          <button onclick="next()">Iniciar</button>
+          <button onclick="next()">Iniciar Actividad</button>
         </div>
-        <div class="pill">Hidrata · Relaja · Muévete</div>
+        <div class="pill">🍃 Hidrata · 🌬️ Relaja · 🚶 Muévete</div>
       `;
     }
 
+    // PANTALLA 1: HIDRATACIÓN
     if (step === 1) {
       app.innerHTML = `
-        <h1>Reto 1: Hidratación</h1>
-        <p>Elige un micro-hábito que puedas hacer mañana:</p>
+        <h1>1. Hidratación</h1>
+        <p>Selecciona tu objetivo saludable para mañana:</p>
         <div class="row">
-          <button onclick="pickHydration('A')">A) Oficina: 3 sorbos por hitos</button>
-          <button onclick="pickHydration('B')">B) Campo: 3 sorbos por pausas</button>
-          <button onclick="pickHydration('C')">C) Turno/Conducción: sorbos por paradas</button>
+          <button onclick="pickHydration('A')">💧 Oficina: Beber agua cada 2 horas</button>
+          <button onclick="pickHydration('B')">🌱 Campo: Hidratación en cada pausa</button>
+          <button onclick="pickHydration('C')">🚗 Conducción: Agua en cada parada</button>
         </div>
       `;
     }
 
+    // PANTALLA 2: DIGITO 1
     if (step === 2) {
       app.innerHTML = `
-        <h1>DÍGITO 1</h1>
+        <p>Tu primer código es:</p>
         <div class="digit">${digits[0]}</div>
-        <p>Listo. Ahora 5 respiraciones: <b>4 inhala / 6 exhala</b> (≈45s).</p>
+        <p>Ahora, vamos a respirar. <br><b>Inhala (4 seg) - Exhala (6 seg)</b></p>
         <div class="row">
           <button onclick="next()">Continuar</button>
         </div>
       `;
     }
 
+    // PANTALLA 3: RELAJACIÓN
     if (step === 3) {
       app.innerHTML = `
-        <h1>Reto 2: Relajación</h1>
-        <p>Completa 5 respiraciones. Cuando termines, toca “Listo”.</p>
+        <h1>2. Relajación</h1>
+        <p>Realiza 5 respiraciones profundas ahora mismo.</p>
         <div class="row">
-          <button onclick="doneBreath()">Listo ✅</button>
+          <button onclick="doneBreath()">¡Listo, me siento mejor! ✅</button>
         </div>
-        <div class="pill">Hombros abajo · exhala largo</div>
+        <div class="pill">Baja los hombros · Libera tensión</div>
       `;
     }
 
+    // PANTALLA 4: DIGITO 2
     if (step === 4) {
       app.innerHTML = `
-        <h1>DÍGITO 2</h1>
+        <p>Tu segundo código es:</p>
         <div class="digit">${digits[1]}</div>
-        <p>Último reto: 60s de movimiento suave (sin impacto).</p>
+        <p>Último paso: Vamos a movernos suavemente por 60 segundos.</p>
         <div class="row">
           <button onclick="next()">Continuar</button>
         </div>
       `;
     }
 
+    // PANTALLA 5: MOVIMIENTO
     if (step === 5) {
       app.innerHTML = `
-        <h1>Reto 3: Movimiento</h1>
-        <p>60s: 30s movilidad de hombros + 30s marcha suave o cadera.</p>
+        <h1>3. Movimiento</h1>
+        <p>30s: Mueve los hombros en círculos.<br>30s: Camina o estira las piernas.</p>
         <div class="row">
-          <button onclick="doneMove()">Listo ✅</button>
+          <button onclick="doneMove()">¡Listo, cuerpo activo! ✅</button>
         </div>
-        <div class="pill">Sin dolor · suave · controlado</div>
+        <div class="pill">Movimientos suaves · Sin dolor</div>
       `;
     }
 
+    // PANTALLA 6: DESBLOQUEO
     if (step === 6) {
       app.innerHTML = `
-        <h1>DÍGITO 3</h1>
+        <p>Tu tercer código es:</p>
         <div class="digit">${digits[2]}</div>
-        <p>Ingresa tu código para desbloquear:</p>
+        <p>Ingresa los 3 números para desbloquear tu recompensa:</p>
         <div class="row">
-          <input id="code" maxlength="3" placeholder="${digits.join('')}" />
-          <button onclick="tryUnlock()">Desbloquear</button>
+          <input id="code" type="tel" maxlength="3" placeholder="---" />
+          <button onclick="tryUnlock()">Verificar Código</button>
         </div>
         <div id="msg" class="small"></div>
       `;
     }
 
+    // PANTALLA 7: ÉXITO
     if (step === 7) {
       app.innerHTML = `
-        <h1>¡DESBLOQUEADO! 🎉</h1>
-        <p>Toca para jugar (premio instantáneo o sorteo).</p>
+        <h1 style="color:var(--brand-green)">¡Código Correcto!</h1>
+        <p>Has completado tu pausa activa. Descubre tu mensaje de bienestar:</p>
         <div class="row">
-          <button onclick="play()">Jugar</button>
-          <button onclick="reset()">Nueva ronda</button>
+          <button onclick="play()">Abrir Mensaje</button>
+          <button onclick="reset()" style="background:#ccc; color:#333">Volver al inicio</button>
         </div>
       `;
     }
 
+    // PANTALLA 8: PREMIO
     if (step === 8) {
       app.innerHTML = `
-        <h1>Resultado</h1>
-        <p style="font-size:22px"><b>${prizeText}</b></p>
+        <h1>Bienestar Integramed</h1>
+        <p style="font-size:20px; font-weight:bold; color:var(--brand-dark)">${prizeText}</p>
         <div class="row">
-          <button onclick="reset()">Siguiente</button>
+          <button onclick="reset()">Finalizar</button>
         </div>
-        <div class="pill">Tip: agua por hitos + 5 respiraciones + 60s movimiento</div>
+        <div class="pill">¡Gracias por cuidar tu salud!</div>
       `;
     }
   }
@@ -142,7 +280,6 @@
   function next(){ step++; render(); }
 
   function pickHydration(letter){
-    // Siempre válido (todas son accionables); genera dígito 1
     digits[0] = randDigit();
     step = 2; render();
   }
@@ -162,20 +299,20 @@
     const v = (document.getElementById('code').value || "").trim();
     const msg = document.getElementById('msg');
     if (v === unlock){
-      msg.innerHTML = `<span class="ok">Correcto ✅</span>`;
-      setTimeout(()=>{ step = 7; render(); }, 350);
+      msg.innerHTML = `<span class="ok">¡Correcto! Redirigiendo...</span>`;
+      setTimeout(()=>{ step = 7; render(); }, 800);
     } else {
-      msg.innerHTML = `<span class="bad">Casi. Prueba de nuevo.</span>`;
+      msg.innerHTML = `<span class="bad">Código incorrecto. Intenta de nuevo.</span>`;
     }
   }
 
   let prizeText = "";
   function play(){
     const outcomes = [
-      "Premio pequeño ✅",
-      "Premio mediano ✅",
-      "Participas en el sorteo final 🎟️",
-      "¡Otra oportunidad! 🔁"
+      "🌟 ¡Gran trabajo! Mantente hidratado hoy.",
+      "🍎 Tip: Come una fruta a media mañana.",
+      "💤 Recuerda: Dormir bien repara tu cuerpo.",
+      "🧘 Tómate 1 minuto de calma si sientes estrés."
     ];
     prizeText = outcomes[Math.floor(Math.random()*outcomes.length)];
     step = 8; render();
