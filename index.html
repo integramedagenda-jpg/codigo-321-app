@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Código 3-2-1</title>
+  <style>
+    body{margin:0;font-family:system-ui,Segoe UI,Roboto,Arial;background:#0b0f1a;color:#fff;}
+    .wrap{max-width:900px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:28px;}
+    .card{background:#121a2b;border:1px solid #24314f;border-radius:18px;padding:22px;box-shadow:0 10px 30px rgba(0,0,0,.25);}
+    h1{margin:0 0 10px;font-size:34px;letter-spacing:.2px;}
+    p{margin:8px 0 0;opacity:.9;font-size:18px;line-height:1.35;}
+    .row{display:flex;gap:12px;flex-wrap:wrap;margin-top:16px;}
+    button{cursor:pointer;border:0;border-radius:14px;padding:14px 16px;font-size:18px;font-weight:650;background:#2a3a63;color:#fff;flex:1;min-width:220px;}
+    button:hover{filter:brightness(1.08);}
+    .small{font-size:14px;opacity:.85;margin-top:10px;}
+    .digit{font-size:72px;font-weight:800;letter-spacing:6px;margin:12px 0;}
+    input{font-size:22px;padding:12px 14px;border-radius:12px;border:1px solid #3a4a74;background:#0b0f1a;color:#fff;width:220px;letter-spacing:10px;text-align:center;}
+    .pill{display:inline-block;padding:8px 12px;border-radius:999px;background:#1b2540;border:1px solid #2d3f6d;margin-top:10px;font-weight:650;}
+    .ok{color:#b8ffb8;}
+    .bad{color:#ffb8b8;}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card" id="app"></div>
+    <div class="small">Modo anónimo. Sin registro. Ronda máx. 3 minutos.</div>
+  </div>
+
+<script>
+  const app = document.getElementById('app');
+  let step = 0;
+  let digits = [];
+  let unlock = "";
+
+  const randDigit = () => Math.floor(Math.random()*9)+1; // 1..9
+
+  function render() {
+    if (step === 0) {
+      app.innerHTML = `
+        <h1>CÓDIGO 3-2-1</h1>
+        <p>3 retos · 3 minutos · 1 premio</p>
+        <div class="row">
+          <button onclick="next()">Iniciar</button>
+        </div>
+        <div class="pill">Hidrata · Relaja · Muévete</div>
+      `;
+    }
+
+    if (step === 1) {
+      app.innerHTML = `
+        <h1>Reto 1: Hidratación</h1>
+        <p>Elige un micro-hábito que puedas hacer mañana:</p>
+        <div class="row">
+          <button onclick="pickHydration('A')">A) Oficina: 3 sorbos por hitos</button>
+          <button onclick="pickHydration('B')">B) Campo: 3 sorbos por pausas</button>
+          <button onclick="pickHydration('C')">C) Turno/Conducción: sorbos por paradas</button>
+        </div>
+      `;
+    }
+
+    if (step === 2) {
+      app.innerHTML = `
+        <h1>DÍGITO 1</h1>
+        <div class="digit">${digits[0]}</div>
+        <p>Listo. Ahora 5 respiraciones: <b>4 inhala / 6 exhala</b> (≈45s).</p>
+        <div class="row">
+          <button onclick="next()">Continuar</button>
+        </div>
+      `;
+    }
+
+    if (step === 3) {
+      app.innerHTML = `
+        <h1>Reto 2: Relajación</h1>
+        <p>Completa 5 respiraciones. Cuando termines, toca “Listo”.</p>
+        <div class="row">
+          <button onclick="doneBreath()">Listo ✅</button>
+        </div>
+        <div class="pill">Hombros abajo · exhala largo</div>
+      `;
+    }
+
+    if (step === 4) {
+      app.innerHTML = `
+        <h1>DÍGITO 2</h1>
+        <div class="digit">${digits[1]}</div>
+        <p>Último reto: 60s de movimiento suave (sin impacto).</p>
+        <div class="row">
+          <button onclick="next()">Continuar</button>
+        </div>
+      `;
+    }
+
+    if (step === 5) {
+      app.innerHTML = `
+        <h1>Reto 3: Movimiento</h1>
+        <p>60s: 30s movilidad de hombros + 30s marcha suave o cadera.</p>
+        <div class="row">
+          <button onclick="doneMove()">Listo ✅</button>
+        </div>
+        <div class="pill">Sin dolor · suave · controlado</div>
+      `;
+    }
+
+    if (step === 6) {
+      app.innerHTML = `
+        <h1>DÍGITO 3</h1>
+        <div class="digit">${digits[2]}</div>
+        <p>Ingresa tu código para desbloquear:</p>
+        <div class="row">
+          <input id="code" maxlength="3" placeholder="${digits.join('')}" />
+          <button onclick="tryUnlock()">Desbloquear</button>
+        </div>
+        <div id="msg" class="small"></div>
+      `;
+    }
+
+    if (step === 7) {
+      app.innerHTML = `
+        <h1>¡DESBLOQUEADO! 🎉</h1>
+        <p>Toca para jugar (premio instantáneo o sorteo).</p>
+        <div class="row">
+          <button onclick="play()">Jugar</button>
+          <button onclick="reset()">Nueva ronda</button>
+        </div>
+      `;
+    }
+
+    if (step === 8) {
+      app.innerHTML = `
+        <h1>Resultado</h1>
+        <p style="font-size:22px"><b>${prizeText}</b></p>
+        <div class="row">
+          <button onclick="reset()">Siguiente</button>
+        </div>
+        <div class="pill">Tip: agua por hitos + 5 respiraciones + 60s movimiento</div>
+      `;
+    }
+  }
+
+  function next(){ step++; render(); }
+
+  function pickHydration(letter){
+    // Siempre válido (todas son accionables); genera dígito 1
+    digits[0] = randDigit();
+    step = 2; render();
+  }
+
+  function doneBreath(){
+    digits[1] = randDigit();
+    step = 4; render();
+  }
+
+  function doneMove(){
+    digits[2] = randDigit();
+    unlock = digits.join('');
+    step = 6; render();
+  }
+
+  function tryUnlock(){
+    const v = (document.getElementById('code').value || "").trim();
+    const msg = document.getElementById('msg');
+    if (v === unlock){
+      msg.innerHTML = `<span class="ok">Correcto ✅</span>`;
+      setTimeout(()=>{ step = 7; render(); }, 350);
+    } else {
+      msg.innerHTML = `<span class="bad">Casi. Prueba de nuevo.</span>`;
+    }
+  }
+
+  let prizeText = "";
+  function play(){
+    const outcomes = [
+      "Premio pequeño ✅",
+      "Premio mediano ✅",
+      "Participas en el sorteo final 🎟️",
+      "¡Otra oportunidad! 🔁"
+    ];
+    prizeText = outcomes[Math.floor(Math.random()*outcomes.length)];
+    step = 8; render();
+  }
+
+  function reset(){
+    step = 0; digits = []; unlock = ""; prizeText = "";
+    render();
+  }
+
+  render();
+</script>
+</body>
+</html>
