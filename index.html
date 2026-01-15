@@ -233,14 +233,13 @@
       `;
     }
 
-    // PANTALLA 6: DESBLOQUEO (CORREGIDA)
+    // PANTALLA 6: DESBLOQUEO
     if (step === 6) {
       app.innerHTML = `
         <h1>DÍGITO 3</h1>
         <div class="digit">${digits[2]}</div>
         <p>Ingresa tu código para desbloquear:</p>
         <div class="row">
-          <!-- AQUI CAMBIÉ EL PLACEHOLDER POR GUIONES "---" -->
           <input id="code" type="tel" maxlength="3" placeholder="---" />
           <button onclick="tryUnlock()">Desbloquear</button>
         </div>
@@ -248,7 +247,7 @@
       `;
     }
 
-    // PANTALLA 7: ÉXITO
+    // PANTALLA 7: ÉXITO (DINÁMICA ORIGINAL RESTAURADA)
     if (step === 7) {
       app.innerHTML = `
         <h1 style="color:var(--brand-green)">¡DESBLOQUEADO! 🎉</h1>
@@ -260,7 +259,7 @@
       `;
     }
 
-    // PANTALLA 8: RESULTADO DEL PREMIO
+    // PANTALLA 8: RESULTADO DEL PREMIO (DINÁMICA ORIGINAL)
     if (step === 8) {
       app.innerHTML = `
         <h1>Resultado</h1>
@@ -304,6 +303,7 @@
 
   let prizeText = "";
   
+  // FUNCIÓN PLAY ORIGINAL RESTAURADA
   function play(){
     const outcomes = [
       "Premio pequeño ✅",
